@@ -15,8 +15,12 @@
 		A81AADD22598D472000BECD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81AADD12598D472000BECD7 /* Assets.xcassets */; };
 		A81AADD52598D472000BECD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81AADD32598D472000BECD7 /* LaunchScreen.storyboard */; };
 		A850DC67259A0FD700003EDA /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850DC66259A0FD700003EDA /* SearchLocationViewController.swift */; };
+		A850DC70259AF21C00003EDA /* SearchKeyWordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850DC6F259AF21C00003EDA /* SearchKeyWordRequest.swift */; };
+		A850DC74259AF24000003EDA /* SearchCategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850DC73259AF24000003EDA /* SearchCategoryRequest.swift */; };
 		A86818272598F72200F57957 /* SelectedLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86818262598F72200F57957 /* SelectedLocationViewModel.swift */; };
 		A868182A2598F98B00F57957 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86818292598F98B00F57957 /* Location.swift */; };
+		A8B731EF259C8BA6004D08D5 /* SearchKeyWordInteratorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B731EE259C8BA6004D08D5 /* SearchKeyWordInteratorImpl.swift */; };
+		A8B731F7259CAB0A004D08D5 /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B731F6259CAB0A004D08D5 /* ResponseModel.swift */; };
 		C6C65EC1AED32ED54039E3E1 /* Pods_SoongMap_1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6090D8F36C23BD62A34C27 /* Pods_SoongMap_1.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +37,12 @@
 		A81AADD42598D472000BECD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A81AADD62598D472000BECD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A850DC66259A0FD700003EDA /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
+		A850DC6F259AF21C00003EDA /* SearchKeyWordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeyWordRequest.swift; sourceTree = "<group>"; };
+		A850DC73259AF24000003EDA /* SearchCategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryRequest.swift; sourceTree = "<group>"; };
 		A86818262598F72200F57957 /* SelectedLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedLocationViewModel.swift; sourceTree = "<group>"; };
 		A86818292598F98B00F57957 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		A8B731EE259C8BA6004D08D5 /* SearchKeyWordInteratorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeyWordInteratorImpl.swift; sourceTree = "<group>"; };
+		A8B731F6259CAB0A004D08D5 /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		AC82C109F7BFFB3884618CF0 /* Pods-SoongMap_1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoongMap_1.release.xcconfig"; path = "Target Support Files/Pods-SoongMap_1/Pods-SoongMap_1.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +88,7 @@
 		A81AADC42598D470000BECD7 /* SoongMap_1 */ = {
 			isa = PBXGroup;
 			children = (
+				A8B731FF259CBD84004D08D5 /* Model */,
 				A850DC6A259A12AE00003EDA /* SearchScene */,
 				A850DC69259A129400003EDA /* MapScene */,
 				A81AADC52598D470000BECD7 /* AppDelegate.swift */,
@@ -93,18 +102,9 @@
 			path = SoongMap_1;
 			sourceTree = "<group>";
 		};
-		A81AADE62598F257000BECD7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A86818292598F98B00F57957 /* Location.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		A850DC69259A129400003EDA /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
-				A81AADE62598F257000BECD7 /* Model */,
 				A868182C2598F9E100F57957 /* ViewModel */,
 				A868182F2598FA0E00F57957 /* View */,
 			);
@@ -114,7 +114,9 @@
 		A850DC6A259A12AE00003EDA /* SearchScene */ = {
 			isa = PBXGroup;
 			children = (
+				A8C8C388259CE6ED00AC44EB /* ViewModel */,
 				A850DC6C259A12E200003EDA /* View */,
+				A8B731EE259C8BA6004D08D5 /* SearchKeyWordInteratorImpl.swift */,
 			);
 			path = SearchScene;
 			sourceTree = "<group>";
@@ -141,6 +143,40 @@
 				A81AADC92598D470000BECD7 /* ViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A8B731FF259CBD84004D08D5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A8B73202259CBDCF004D08D5 /* Request */,
+				A8B73200259CBDB9004D08D5 /* Response */,
+				A86818292598F98B00F57957 /* Location.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A8B73200259CBDB9004D08D5 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				A8B731F6259CAB0A004D08D5 /* ResponseModel.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		A8B73202259CBDCF004D08D5 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				A850DC6F259AF21C00003EDA /* SearchKeyWordRequest.swift */,
+				A850DC73259AF24000003EDA /* SearchCategoryRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		A8C8C388259CE6ED00AC44EB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E5EAF503B6DB32AAD8CA33BD /* Frameworks */ = {
@@ -266,11 +302,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A81AADCA2598D470000BECD7 /* ViewController.swift in Sources */,
+				A850DC70259AF21C00003EDA /* SearchKeyWordRequest.swift in Sources */,
+				A8B731EF259C8BA6004D08D5 /* SearchKeyWordInteratorImpl.swift in Sources */,
 				A86818272598F72200F57957 /* SelectedLocationViewModel.swift in Sources */,
+				A850DC74259AF24000003EDA /* SearchCategoryRequest.swift in Sources */,
 				A81AADC62598D470000BECD7 /* AppDelegate.swift in Sources */,
 				A81AADC82598D470000BECD7 /* SceneDelegate.swift in Sources */,
 				A850DC67259A0FD700003EDA /* SearchLocationViewController.swift in Sources */,
 				A81AADD02598D470000BECD7 /* SoongMap_1.xcdatamodeld in Sources */,
+				A8B731F7259CAB0A004D08D5 /* ResponseModel.swift in Sources */,
 				A868182A2598F98B00F57957 /* Location.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
