@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import NMapsMap
 
 class SearchLocationViewController: UIViewController {
-
+    
     @IBOutlet weak var searchContainerView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    
     var searchController : UISearchController!
-    let selectedLocationViewModel = SelectedLocationViewModel()
+    
+    let selectedLocationViewModel = SelectedLocationViewModel() // 선택된 셀 추가
+    let searchedLocationViewModel = SearchedLocationViewModel() // 검색된 셀 저장
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +28,6 @@ class SearchLocationViewController: UIViewController {
         //searchController 안의 searchBar 이용하기
         searchContainerView.addSubview(searchController.searchBar)
         searchController.searchBar.delegate = self // searchBar delegate 설정, Delegate extension
-        
-
-       
     }
 }
 
@@ -55,9 +54,21 @@ extension SearchLocationViewController : UISearchBarDelegate {
         SearchKeyWordInteratorImpl.search(searchTerm,location: nil) { response in
             //TODO : 데이터 화면에 표시하기  -> searchedLocationViewModel 만들기
             //TODO : 셀 선택시, 선택된 셀에 해당하는 좌표에 마킹하기 선택시 dismiss
-        
+            for document in response.documents {
+                self.searchedLocationViewModel.addLocation(document: document)
+            }
+            self.searchedLocationViewModel.setSearchedInfo(searchedInfo: response.meta)
             
+            print("searchedLocation -- > \(self.searchedLocationViewModel.searchedLocation)")
+            print("meta ----> \(self.searchedLocationViewModel.searchedInfo?.total_count)")
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData() //searching이 다 끝난 시점에서 data reload
+            }
         }
+        
+        
+        
         searchController.isActive = false
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -69,19 +80,30 @@ extension SearchLocationViewController : UISearchBarDelegate {
 //MARK: - tableView Delegate, DataSource extension
 extension SearchLocationViewController : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        print("totalcount --> \(searchedLocationViewModel.searchedInfo?.total_count)")
+        guard let result = searchedLocationViewModel.searchedInfo?.total_count else {
+            print("section error : total count is nil !!")
+            return 0
+        }
+        return result % 16
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = "test Label"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? SearchedCell else {
+            return UITableViewCell()
+        }
+        //표현할 데이터
+        cell.placeName.text = searchedLocationViewModel.searchedLocation[indexPath.row].place_name
+        cell.addressName.text = searchedLocationViewModel.searchedLocation[indexPath.row].address_name
+        cell.categoryName.text = searchedLocationViewModel.searchedLocation[indexPath.row].category_group_name
         
+        print("됬니??")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //셀이 선택되었을 때 searchBar 동작 x
-        print("cell selected")
+        print("selected data---> \(searchedLocationViewModel.searchedLocation[indexPath.row])")
         searchController.isActive = false
     }
 }

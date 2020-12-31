@@ -65,13 +65,47 @@
                                 <rect key="frame" x="0.0" y="104" width="414" height="758"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="Vno-D3-5IR">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="Vno-D3-5IR" customClass="SearchedCell" customModule="SoongMap_1" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vno-D3-5IR" id="7hd-sS-aiW">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8G-Ft-bFw">
+                                                    <rect key="frame" x="20" y="10" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOU-Fy-uep">
+                                                    <rect key="frame" x="356" y="24.5" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VuW-ha-i4Y">
+                                                    <rect key="frame" x="20" y="39.5" width="42" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="VuW-ha-i4Y" firstAttribute="leading" secondItem="7hd-sS-aiW" secondAttribute="leading" constant="20" id="OuM-Wx-MeZ"/>
+                                                <constraint firstItem="q8G-Ft-bFw" firstAttribute="leading" secondItem="7hd-sS-aiW" secondAttribute="leading" constant="20" id="Wcf-8v-prK"/>
+                                                <constraint firstItem="q8G-Ft-bFw" firstAttribute="top" secondItem="7hd-sS-aiW" secondAttribute="top" constant="10" id="aqf-EP-ITR"/>
+                                                <constraint firstAttribute="bottom" secondItem="VuW-ha-i4Y" secondAttribute="bottom" constant="10" id="fAK-Ce-nwV"/>
+                                                <constraint firstAttribute="trailing" secondItem="QOU-Fy-uep" secondAttribute="trailing" constant="16" id="gXp-63-rcw"/>
+                                                <constraint firstItem="VuW-ha-i4Y" firstAttribute="top" secondItem="q8G-Ft-bFw" secondAttribute="bottom" constant="8.5" id="n9V-Bo-VQ8"/>
+                                                <constraint firstItem="QOU-Fy-uep" firstAttribute="centerY" secondItem="7hd-sS-aiW" secondAttribute="centerY" id="zXR-f1-jru"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressName" destination="VuW-ha-i4Y" id="bBH-id-ZpW"/>
+                                            <outlet property="categoryName" destination="QOU-Fy-uep" id="ijk-nx-vTg"/>
+                                            <outlet property="placeName" destination="q8G-Ft-bFw" id="g3z-nT-JVG"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A818D5F5259D9F3F005F84BE /* SearchedLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A818D5F4259D9F3F005F84BE /* SearchedLocationViewModel.swift */; };
+		A818D5F8259DA974005F84BE /* SearchedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A818D5F7259DA974005F84BE /* SearchedCell.swift */; };
 		A81AADC62598D470000BECD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AADC52598D470000BECD7 /* AppDelegate.swift */; };
 		A81AADC82598D470000BECD7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AADC72598D470000BECD7 /* SceneDelegate.swift */; };
 		A81AADCA2598D470000BECD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81AADC92598D470000BECD7 /* ViewController.swift */; };
@@ -27,6 +29,8 @@
 /* Begin PBXFileReference section */
 		4C6090D8F36C23BD62A34C27 /* Pods_SoongMap_1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoongMap_1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE8EC2B0E86BFFCAA380625 /* Pods-SoongMap_1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoongMap_1.debug.xcconfig"; path = "Target Support Files/Pods-SoongMap_1/Pods-SoongMap_1.debug.xcconfig"; sourceTree = "<group>"; };
+		A818D5F4259D9F3F005F84BE /* SearchedLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedLocationViewModel.swift; sourceTree = "<group>"; };
+		A818D5F7259DA974005F84BE /* SearchedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedCell.swift; sourceTree = "<group>"; };
 		A81AADC22598D470000BECD7 /* SoongMap_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoongMap_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81AADC52598D470000BECD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A81AADC72598D470000BECD7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				A850DC66259A0FD700003EDA /* SearchLocationViewController.swift */,
+				A818D5F7259DA974005F84BE /* SearchedCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 		A8C8C388259CE6ED00AC44EB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				A818D5F4259D9F3F005F84BE /* SearchedLocationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -308,9 +314,11 @@
 				A850DC74259AF24000003EDA /* SearchCategoryRequest.swift in Sources */,
 				A81AADC62598D470000BECD7 /* AppDelegate.swift in Sources */,
 				A81AADC82598D470000BECD7 /* SceneDelegate.swift in Sources */,
+				A818D5F8259DA974005F84BE /* SearchedCell.swift in Sources */,
 				A850DC67259A0FD700003EDA /* SearchLocationViewController.swift in Sources */,
 				A81AADD02598D470000BECD7 /* SoongMap_1.xcdatamodeld in Sources */,
 				A8B731F7259CAB0A004D08D5 /* ResponseModel.swift in Sources */,
+				A818D5F5259D9F3F005F84BE /* SearchedLocationViewModel.swift in Sources */,
 				A868182A2598F98B00F57957 /* Location.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
