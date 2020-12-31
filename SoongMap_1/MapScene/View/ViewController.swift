@@ -36,7 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.touchDelegate = self
         mapView.moveCamera(NMFCameraUpdate(position: DEFAULT_LOCATION))
     }
-    @IBAction func searchStart(_ sender: Any) {
+    override func viewWillAppear(_ animated: Bool) {
         //TODO[x] : 카메라 위치 이동 (가장 마지막 아이템으로)
         //TODO[x] : selectedLocation에 있는 아이템 좌표에 마킹
         guard let x = selectedLocationViewModel.selectedLocation.last?.placeInfo.x else { return }
@@ -64,6 +64,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             marker.marker.mapView = mapView
         }
         mapView.moveCamera(cameraUpdate)
+    }
+    
+    @IBAction func searchStart(_ sender: Any) {
+        //TODO : 마커를 중심으로 radius, sort 옵션을 추가하여 검색 api를 사용해 검색하기
     }//search
 }
 
