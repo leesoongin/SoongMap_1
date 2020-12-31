@@ -9,27 +9,22 @@ import UIKit
 
 
 struct Location{
-    let lat : Double
-    let lng : Double
-    let radius : Int
-    let sort : String
-    let placeInfo : Document?
-    
-    init() {
-        self.lat = 0
-        self.lng = 0
-        self.radius = 0
-        self.sort = ""
-        self.placeInfo = nil  // wl
-    }
-    
-    init (lat : Double, lng : Double, radius : Int = 1000, sort : String = "accurancy", placeInfo : Document? = nil){
-        self.lat = lat
-        self.lng = lng
-        self.radius = radius
-        self.sort = sort
+    let placeInfo : Document
+    let option : SearchOption
+    init (placeInfo : Document, option : SearchOption){
         self.placeInfo = placeInfo
+        self.option = option
     }
 }
 
 
+struct SearchOption {
+    //default option으로 radius 1000, sort accurancy
+    let radius : Int
+    let sort : String
+    
+    init(radius : Int = 1000, sort : String = "accurancy") {
+        self.radius = radius
+        self.sort = sort
+    }
+}

@@ -8,6 +8,8 @@
 import UIKit
 import NMapsMap
 
+private let PAGE_MAX_SIZE : Int = 15 //search api의 페이지당 15개의 결과 서칭됨
+
 class SearchLocationViewController: UIViewController {
     
     @IBOutlet weak var searchContainerView: UIView!
@@ -16,10 +18,10 @@ class SearchLocationViewController: UIViewController {
     
     let selectedLocationViewModel = SelectedLocationViewModel() // 선택된 셀 추가
     let searchedLocationViewModel = SearchedLocationViewModel() // 검색된 셀 저장
+    let markerViewModel = MarkerViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         //검색에 이용되는 것들이 정의 되어 있음
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self //updater 콜백 메서드 -> updateSearchResults extension
@@ -36,7 +38,6 @@ extension SearchLocationViewController : UISearchResultsUpdating {
     //내 생각엔 이거 입력이 있을때마다 업데이트 되면서 찾아주는 기능인듯 함.
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
-            print("searchText --> \(searchText)")
         }
     }
 }
@@ -52,23 +53,17 @@ extension SearchLocationViewController : UISearchBarDelegate {
         guard let searchTerm = searchBar.text else { return } //검색어
         
         SearchKeyWordInteratorImpl.search(searchTerm,location: nil) { response in
-            //TODO : 데이터 화면에 표시하기  -> searchedLocationViewModel 만들기
-            //TODO : 셀 선택시, 선택된 셀에 해당하는 좌표에 마킹하기 선택시 dismiss
+            //TODO[x] : 데이터 화면에 표시하기  -> searchedLocationViewModel 만들기
+            self.searchedLocationViewModel.clearSearchedLocation() // 원래 있던 데이터 비워주기
             for document in response.documents {
                 self.searchedLocationViewModel.addLocation(document: document)
             }
             self.searchedLocationViewModel.setSearchedInfo(searchedInfo: response.meta)
-            
-            print("searchedLocation -- > \(self.searchedLocationViewModel.searchedLocation)")
-            print("meta ----> \(self.searchedLocationViewModel.searchedInfo?.total_count)")
-            
+          
             DispatchQueue.main.async {
                 self.tableView.reloadData() //searching이 다 끝난 시점에서 data reload
             }
         }
-        
-        
-        
         searchController.isActive = false
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -80,30 +75,33 @@ extension SearchLocationViewController : UISearchBarDelegate {
 //MARK: - tableView Delegate, DataSource extension
 extension SearchLocationViewController : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("totalcount --> \(searchedLocationViewModel.searchedInfo?.total_count)")
-        guard let result = searchedLocationViewModel.searchedInfo?.total_count else {
-            print("section error : total count is nil !!")
-            return 0
+        let result = searchedLocationViewModel.searchedLocation.count
+        
+        if result < PAGE_MAX_SIZE {
+            return result
         }
-        return result % 16
+        return PAGE_MAX_SIZE
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? SearchedCell else {
             return UITableViewCell()
         }
-        //표현할 데이터
         cell.placeName.text = searchedLocationViewModel.searchedLocation[indexPath.row].place_name
         cell.addressName.text = searchedLocationViewModel.searchedLocation[indexPath.row].address_name
         cell.categoryName.text = searchedLocationViewModel.searchedLocation[indexPath.row].category_group_name
         
-        print("됬니??")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //셀이 선택되었을 때 searchBar 동작 x
-        print("selected data---> \(searchedLocationViewModel.searchedLocation[indexPath.row])")
+        //TODO[x] : 셀 선택시 selectedCell에 추가 , dismiss
+        //TODO : option은 나중에 추가하기, 일단은 default
+        let document = searchedLocationViewModel.searchedLocation[indexPath.row]
+        let option = SearchOption()
+       
+        selectedLocationViewModel.addLocation(document: document, option: option)
         searchController.isActive = false
+        dismiss(animated: true, completion: nil)
     }
 }

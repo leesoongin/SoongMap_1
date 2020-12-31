@@ -16,33 +16,60 @@ private let DEFAULT_LOCATION = NMFCameraPosition(NMGLatLng(lat: 37.5666102, lng:
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
+    
     @IBOutlet weak var dummySearchBar: UISearchBar!
     @IBOutlet weak var naverMapView : NMFNaverMapView!
+    
     var mapView : NMFMapView {
         return naverMapView.mapView
     }
-   
     var locationManager : CLLocationManager!
     let selectedLocationViewModel = SelectedLocationViewModel()
- 
+    let markerViewModel = MarkerViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dummySearchBar.delegate = self
         dummySearchBar.backgroundImage = UIImage()
-        //Setting
         naverMapView.showLocationButton = true //내 위치 찾기 버튼 활성화 false는 비활성화
-        setLocationOverlay() // locationOverlay setting
         mapView.touchDelegate = self
-     
         mapView.moveCamera(NMFCameraUpdate(position: DEFAULT_LOCATION))
     }
+    @IBAction func searchStart(_ sender: Any) {
+        //TODO[x] : 카메라 위치 이동 (가장 마지막 아이템으로)
+        //TODO[x] : selectedLocation에 있는 아이템 좌표에 마킹
+        guard let x = selectedLocationViewModel.selectedLocation.last?.placeInfo.x else { return }
+        guard let y = selectedLocationViewModel.selectedLocation.last?.placeInfo.y else { return }
+        let lng = Double(x)!
+        let lat = Double(y)!
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+        //Marker 객체 생성해서 viewModel에 저장
+        for location in selectedLocationViewModel.selectedLocation{
+            let marker = NMFMarker(position: NMGLatLng(lat: Double(location.placeInfo.y)!, lng: Double(location.placeInfo.x)!))
+            let document = location.placeInfo
+            let result = Marker(marker: marker, document: document)
+            markerViewModel.addMarker(marker: result)
+        }
+        //각각의 Marker객체에 touchHandler, mapView 할당
+        for marker in markerViewModel.markers{
+            //TODO : 상호명으로 캡션 달기
+            marker.marker.captionText = marker.document.place_name
+            marker.marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
+            marker.marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
+                    //TODO : 인포윈도우로 정보 표현하기
+                print("marker data--> \(marker.document)")
+                    return true
+            }
+            marker.marker.mapView = mapView
+        }
+        mapView.moveCamera(cameraUpdate)
+    }//search
 }
 
 //MARK: - Map Touch Delegate
 extension ViewController : NMFMapViewTouchDelegate{
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        selectDesination(latlng)
         print("latlng -->\(selectedLocationViewModel.selectedLocation)")
     }
     func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
@@ -54,6 +81,7 @@ extension ViewController : NMFMapViewTouchDelegate{
 
 extension ViewController : UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
         //searching화면으로 전환
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "testVC") else{
             return
@@ -64,30 +92,17 @@ extension ViewController : UISearchBarDelegate {
 }
 
 extension ViewController {
-    //TODO[x] : 선택한 위치에 서클 오버레이를 그리고 그 해당 좌표점을 selectedLocation에 저장
-    //TODO : 이미 존재하는 오버레이 터치 시 오버레이 지우고 deleteSelectedLocation하기
     func selectDesination(_ latlng : NMGLatLng){
-        selectedLocationViewModel.addLocation(latlng: latlng)
         var circleOverlay = NMFCircleOverlay(NMGLatLng(lat: latlng.lat, lng: latlng.lng), radius: 500) //radius는 일단 defalut, 커스텀설정은 나중에
         circleOverlay.fillColor =  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).withAlphaComponent(31/255)
         circleOverlay.outlineWidth = 1
         circleOverlay.mapView = mapView
         circleOverlay.touchHandler = { [weak self] (overlay : NMFOverlay) in
-            self?.selectedLocationViewModel.deleteLocation(latlng: latlng)
-            circleOverlay.mapView = nil
-            return true
+        circleOverlay.mapView = nil
+        return true
         }
-        
     }
     
-    func setLocationOverlay(){
-        let locationOverlay = mapView.locationOverlay
-        locationOverlay.hidden = false
-        locationOverlay.iconWidth = 100
-        locationOverlay.iconHeight = 100
-        locationOverlay.minZoom = 10
-        locationOverlay.maxZoom = 20
-    }
     //MARK: -requestGPSPermission
     func requestGPSPermission() -> Bool {
           switch CLLocationManager.authorizationStatus() {

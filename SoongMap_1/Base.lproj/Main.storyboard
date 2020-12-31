@@ -21,18 +21,34 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLJ-Ec-rfx">
+                                <rect key="frame" x="346" y="52" width="60" height="60"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="1uN-Mn-YeR"/>
+                                    <constraint firstAttribute="height" constant="60" id="RJL-N4-bcF"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="magnifyingglass" catalog="system"/>
+                                <connections>
+                                    <action selector="searchStart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8im-dW-D6w"/>
+                                </connections>
+                            </button>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="8k3-8f-PoJ">
-                                <rect key="frame" x="8" y="60" width="398" height="56"/>
+                                <rect key="frame" x="8" y="60" width="330" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="WLJ-Ec-rfx" firstAttribute="leading" secondItem="8k3-8f-PoJ" secondAttribute="trailing" constant="8" id="0Qm-Qu-fvZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WLJ-Ec-rfx" secondAttribute="trailing" constant="8" id="1Re-0i-Tmr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MZm-fK-cNJ" secondAttribute="trailing" id="8w3-LA-0Yf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8k3-8f-PoJ" secondAttribute="trailing" constant="8" id="HWh-1L-F63"/>
+                            <constraint firstItem="WLJ-Ec-rfx" firstAttribute="centerY" secondItem="8k3-8f-PoJ" secondAttribute="centerY" id="BHY-MP-NaA"/>
                             <constraint firstAttribute="bottom" secondItem="MZm-fK-cNJ" secondAttribute="bottom" id="Nbf-5Z-jZ2"/>
                             <constraint firstItem="8k3-8f-PoJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="RNf-60-eUU"/>
+                            <constraint firstItem="WLJ-Ec-rfx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="apw-Ry-JHG"/>
                             <constraint firstItem="8k3-8f-PoJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="enh-PL-xEF"/>
                             <constraint firstItem="MZm-fK-cNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fQ9-ji-SuL"/>
                             <constraint firstItem="MZm-fK-cNJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="uDD-sS-NHO"/>
@@ -45,7 +61,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="141" y="124"/>
+            <point key="canvasLocation" x="140.57971014492756" y="123.88392857142857"/>
         </scene>
         <!--Search Location View Controller-->
         <scene sceneID="vUt-cO-Gvz">
@@ -137,6 +153,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

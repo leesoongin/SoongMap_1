@@ -21,6 +21,9 @@ class SearchedLocationManager {
         
         self.searchedInfo = info
     }
+    func clearSearchedLocation(){
+        searchedLocation.removeAll()
+    }
   
 }
 
@@ -39,5 +42,8 @@ class SearchedLocationViewModel {
     }
     func setSearchedInfo(searchedInfo : Meta?) {
         return manager.setSearchedInfo(searchedInfo)
+    }
+    func clearSearchedLocation(){
+        return manager.clearSearchedLocation()
     }
 }
