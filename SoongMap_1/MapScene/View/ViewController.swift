@@ -11,7 +11,6 @@ import CoreLocation
 
 //TODO : 켜지자마자 내 위치 확인하고 내 위치로 시점이동 or 위치 확인이 불가하다면 default location으로 이동하자
 
-
 private let DEFAULT_LOCATION = NMFCameraPosition(NMGLatLng(lat: 37.5666102, lng: 126.9783881), zoom: 15, tilt: 0, heading: 0)// 서울 시청
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
@@ -37,37 +36,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mapView.moveCamera(NMFCameraUpdate(position: DEFAULT_LOCATION))
     }
     override func viewWillAppear(_ animated: Bool) {
-        //TODO[x] : 카메라 위치 이동 (가장 마지막 아이템으로)
-        //TODO[x] : selectedLocation에 있는 아이템 좌표에 마킹
-        guard let x = selectedLocationViewModel.selectedLocation.last?.placeInfo.x else { return }
-        guard let y = selectedLocationViewModel.selectedLocation.last?.placeInfo.y else { return }
-        let lng = Double(x)!
-        let lat = Double(y)!
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
-        //Marker 객체 생성해서 viewModel에 저장
-        for location in selectedLocationViewModel.selectedLocation{
-            let marker = NMFMarker(position: NMGLatLng(lat: Double(location.placeInfo.y)!, lng: Double(location.placeInfo.x)!))
-            let document = location.placeInfo
-            let result = Marker(marker: marker, document: document)
-            markerViewModel.addMarker(marker: result)
-        }
-        //각각의 Marker객체에 touchHandler, mapView 할당
-        for marker in markerViewModel.markers{
-            //TODO : 상호명으로 캡션 달기
-            marker.marker.captionText = marker.document.place_name
-            marker.marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
-            marker.marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
-                    //TODO : 인포윈도우로 정보 표현하기
-                print("marker data--> \(marker.document)")
-                    return true
-            }
-            marker.marker.mapView = mapView
-        }
-        mapView.moveCamera(cameraUpdate)
+        registSelectedLocation() // viewModel에 선택된 장소들 마킹
+        updateCamera() // 마킹된 지점중 마지막 지정된 위치로 카메라 위치 update 
     }
     
     @IBAction func searchStart(_ sender: Any) {
-        //TODO : 마커를 중심으로 radius, sort 옵션을 추가하여 검색 api를 사용해 검색하기
+        //문제 !!! 네트워킹이 끝나고 난 뒤 실행시키려면 어케해야할까? 네트워킹 강의 인프런꺼 보면 해결할 수 있을듯
+        search()
+        registSearchedLocation()
     }//search
 }
 
@@ -96,16 +72,70 @@ extension ViewController : UISearchBarDelegate {
 }
 
 extension ViewController {
-    func selectDesination(_ latlng : NMGLatLng){
-        var circleOverlay = NMFCircleOverlay(NMGLatLng(lat: latlng.lat, lng: latlng.lng), radius: 500) //radius는 일단 defalut, 커스텀설정은 나중에
-        circleOverlay.fillColor =  #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1).withAlphaComponent(31/255)
-        circleOverlay.outlineWidth = 1
-        circleOverlay.mapView = mapView
-        circleOverlay.touchHandler = { [weak self] (overlay : NMFOverlay) in
-        circleOverlay.mapView = nil
-        return true
+    //탐색 기준이 되는 마커들을 viewModel에 저장
+    func registSelectedLocation(){
+        //Marker 객체 생성해서 viewModel에 저장
+        for location in selectedLocationViewModel.selectedLocation{
+            let marker = NMFMarker(position: NMGLatLng(lat: Double(location.placeInfo.y)!, lng: Double(location.placeInfo.x)!))
+            let document = location.placeInfo
+            let result = Marker(marker: marker, document: document)
+            markerViewModel.addMarker(marker: result)
+        }
+        //각각의 Marker객체에 touchHandler, mapView 할당
+        for marker in markerViewModel.markers{
+            //TODO : 상호명으로 캡션 달기
+            marker.marker.captionText = marker.document.place_name
+            marker.marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
+            marker.marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
+                    //TODO : 인포윈도우로 정보 표현하기
+                print("marker data--> \(marker.document)")
+                    return true
+            }
+            marker.marker.mapView = mapView
         }
     }
+    func registSearchedLocation(){
+        for marker in markerViewModel.resultMarkers{
+            marker.marker.captionText = marker.document.place_name
+            marker.marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
+            marker.marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
+                    //TODO : 인포윈도우로 정보 표현하기
+                print("marker data--> \(marker.document)")
+                    return true
+            }//handler
+            marker.marker.mapView = mapView
+        }//for
+    }//registFunc
+    
+    // 화면전환 함수
+    func updateCamera(){
+        //TODO[x] : 카메라 위치 이동 (가장 마지막 아이템으로)
+        //TODO[x] : selectedLocation에 있는 아이템 좌표에 마킹
+        guard let x = selectedLocationViewModel.selectedLocation.last?.placeInfo.x else { return }
+        guard let y = selectedLocationViewModel.selectedLocation.last?.placeInfo.y else { return }
+        let lng = Double(x)!
+        let lat = Double(y)!
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
+        
+        mapView.moveCamera(cameraUpdate)
+    }
+    
+    //검색 api사용하는함수로 작성하자
+    func search(){
+        //TODO : 마커를 중심으로 radius, sort 옵션을 추가하여 검색 api를 사용해 검색하기
+        //TODO[x] : 1. 선택된 마커의 수만큼 서칭
+        //TODO[x] : 2. 서칭된 결과를 MarkerViewModel의 result에 저장
+        for location in selectedLocationViewModel.selectedLocation{
+            SearchKeyWordInteratorImpl.search("맛집", location: location) { response in
+                //response의 데이터로 서칭된 결과 저장
+                for document in response.documents{
+                    let marker = NMFMarker(position: NMGLatLng(lat: Double(document.y)!, lng: Double(document.x)!))
+                    self.markerViewModel.addResultMarker(marker: Marker(marker: marker, document: document))
+                }//inner for
+            }//closer
+        }//for
+        print("result Marker --> \(markerViewModel.resultMarkers)")
+    }//search
     
     //MARK: -requestGPSPermission
     func requestGPSPermission() -> Bool {
