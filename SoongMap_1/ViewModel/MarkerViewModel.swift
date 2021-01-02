@@ -20,6 +20,9 @@ class MarkerManager {
     func addResultMarker(_ marker : Marker){
         resultMarkers.append(marker)
     }
+    func clearResultMarker(){
+        resultMarkers.removeAll()
+    }
 }
 
 class MarkerViewModel {
@@ -37,5 +40,8 @@ class MarkerViewModel {
     }
     func addResultMarker(marker : Marker){
         return manager.addResultMarker(marker)
+    }
+    func clearResultMarker(){
+        return manager.clearResultMarker()
     }
 }

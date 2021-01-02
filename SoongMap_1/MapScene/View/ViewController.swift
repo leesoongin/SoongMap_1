@@ -43,7 +43,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func searchStart(_ sender: Any) {
         //문제 !!! 네트워킹이 끝나고 난 뒤 실행시키려면 어케해야할까? 네트워킹 강의 인프런꺼 보면 해결할 수 있을듯
         search()
-        registSearchedLocation()
     }//search
 }
 
@@ -94,19 +93,6 @@ extension ViewController {
             marker.marker.mapView = mapView
         }
     }
-    func registSearchedLocation(){
-        for marker in markerViewModel.resultMarkers{
-            marker.marker.captionText = marker.document.place_name
-            marker.marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
-            marker.marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
-                    //TODO : 인포윈도우로 정보 표현하기
-                print("marker data--> \(marker.document)")
-                    return true
-            }//handler
-            marker.marker.mapView = mapView
-        }//for
-    }//registFunc
-    
     // 화면전환 함수
     func updateCamera(){
         //TODO[x] : 카메라 위치 이동 (가장 마지막 아이템으로)
@@ -125,16 +111,26 @@ extension ViewController {
         //TODO : 마커를 중심으로 radius, sort 옵션을 추가하여 검색 api를 사용해 검색하기
         //TODO[x] : 1. 선택된 마커의 수만큼 서칭
         //TODO[x] : 2. 서칭된 결과를 MarkerViewModel의 result에 저장
+        markerViewModel.clearResultMarker()
         for location in selectedLocationViewModel.selectedLocation{
-            SearchKeyWordInteratorImpl.search("맛집", location: location) { response in
+            SearchKeyWordInteratorImpl.search("주유소", location: location) { response in
                 //response의 데이터로 서칭된 결과 저장
                 for document in response.documents{
                     let marker = NMFMarker(position: NMGLatLng(lat: Double(document.y)!, lng: Double(document.x)!))
+                    DispatchQueue.main.async {
+                        marker.captionText = document.place_name
+                        marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
+                        marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
+                                //TODO : 인포윈도우로 정보 표현하기
+                            print("marker data--> \(document)")
+                                return true
+                        }//handler
+                        marker.mapView = self.mapView
+                    } // main thread
                     self.markerViewModel.addResultMarker(marker: Marker(marker: marker, document: document))
                 }//inner for
             }//closer
-        }//for
-        print("result Marker --> \(markerViewModel.resultMarkers)")
+        } //for
     }//search
     
     //MARK: -requestGPSPermission
