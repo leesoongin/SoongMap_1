@@ -23,7 +23,7 @@
                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCa-rr-Ps7">
-                                <rect key="frame" x="8" y="120" width="398" height="60"/>
+                                <rect key="frame" x="8" y="92" width="398" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="dfY-HC-f2q"/>
                                 </constraints>
@@ -32,7 +32,7 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLJ-Ec-rfx">
-                                <rect key="frame" x="366" y="62" width="40" height="40"/>
+                                <rect key="frame" x="366" y="50" width="40" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="1uN-Mn-YeR"/>
@@ -45,7 +45,7 @@
                                 </connections>
                             </button>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="8k3-8f-PoJ">
-                                <rect key="frame" x="8" y="60" width="350" height="44"/>
+                                <rect key="frame" x="8" y="48" width="350" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="R4c-k9-ehf"/>
                                 </constraints>
@@ -59,10 +59,10 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WLJ-Ec-rfx" secondAttribute="trailing" constant="8" id="1Re-0i-Tmr"/>
                             <constraint firstItem="WLJ-Ec-rfx" firstAttribute="centerY" secondItem="8k3-8f-PoJ" secondAttribute="centerY" id="4iS-5g-X5e"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MZm-fK-cNJ" secondAttribute="trailing" id="8w3-LA-0Yf"/>
-                            <constraint firstItem="KCa-rr-Ps7" firstAttribute="top" secondItem="8k3-8f-PoJ" secondAttribute="bottom" constant="16" id="Ldb-Qg-ihM"/>
+                            <constraint firstItem="KCa-rr-Ps7" firstAttribute="top" secondItem="8k3-8f-PoJ" secondAttribute="bottom" id="Ldb-Qg-ihM"/>
                             <constraint firstAttribute="bottom" secondItem="MZm-fK-cNJ" secondAttribute="bottom" id="Nbf-5Z-jZ2"/>
                             <constraint firstItem="8k3-8f-PoJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="RNf-60-eUU"/>
-                            <constraint firstItem="8k3-8f-PoJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="enh-PL-xEF"/>
+                            <constraint firstItem="8k3-8f-PoJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="4" id="enh-PL-xEF"/>
                             <constraint firstItem="MZm-fK-cNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fQ9-ji-SuL"/>
                             <constraint firstItem="KCa-rr-Ps7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fqP-3P-EZH"/>
                             <constraint firstItem="MZm-fK-cNJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="uDD-sS-NHO"/>
@@ -177,22 +177,21 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-s8-vrq">
                                 <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dlk-hn-h96">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="estimatedItemSize" width="120" height="160"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dlk-hn-h96">
+                                    <size key="itemSize" width="101" height="77"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="landMarkCell" id="BNr-1x-t9o" customClass="LandMarkCell" customModule="SoongMap_1" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-34" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="-8.5" width="101" height="77"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nRd-st-jUa">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="101" height="77"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="128" height="128"/>
+                                        <size key="customSize" width="101" height="77"/>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
