@@ -15,7 +15,6 @@ private let DEFAULT_LOCATION = NMFCameraPosition(NMGLatLng(lat: 37.5666102, lng:
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    
     @IBOutlet weak var dummySearchBar: UISearchBar!
     @IBOutlet weak var naverMapView : NMFNaverMapView!
     
@@ -31,10 +30,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         dummySearchBar.delegate = self
         dummySearchBar.backgroundImage = UIImage()
+        dummySearchBar.searchTextField.backgroundColor =  #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         naverMapView.showLocationButton = true //내 위치 찾기 버튼 활성화 false는 비활성화
         mapView.touchDelegate = self
         mapView.moveCamera(NMFCameraUpdate(position: DEFAULT_LOCATION))
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         registSelectedLocation() // viewModel에 선택된 장소들 마킹
         updateCamera() // 마킹된 지점중 마지막 지정된 위치로 카메라 위치 update 
@@ -119,6 +120,7 @@ extension ViewController {
                     let marker = NMFMarker(position: NMGLatLng(lat: Double(document.y)!, lng: Double(document.x)!))
                     DispatchQueue.main.async {
                         marker.captionText = document.place_name
+                        marker.iconImage = NMFOverlayImage(name: "image1")
                         marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
                         marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
                                 //TODO : 인포윈도우로 정보 표현하기
