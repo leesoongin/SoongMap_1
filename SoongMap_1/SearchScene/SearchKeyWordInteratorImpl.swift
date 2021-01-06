@@ -25,12 +25,13 @@ class SearchKeyWordInteratorImpl {
             print("option x --> \(option?.x) , \(option?.y),  \(option?.radius), \(option?.sort)")
             let xQuery = URLQueryItem(name: "x", value: option?.x)
             let yQuery = URLQueryItem(name: "y", value: option?.y)
+            let pageQuery = URLQueryItem(name: "page", value: String(option!.page))
             let radiusQuery = URLQueryItem(name: "radius", value: (option?.radius))
          //   let sortQuery = URLQueryItem(name: "sort", value: option?.sort)
             urlComponents.queryItems?.append(xQuery)
             urlComponents.queryItems?.append(yQuery)
             urlComponents.queryItems?.append(radiusQuery)
-           // urlComponents.queryItems?.append(sortQuery)
+            urlComponents.queryItems?.append(pageQuery)
         }
         urlComponents.queryItems?.append(query)
         

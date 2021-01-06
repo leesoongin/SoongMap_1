@@ -19,6 +19,7 @@ class SearchLocationViewController: UIViewController {
     let selectedLocationViewModel = SelectedLocationViewModel() // 선택된 셀 추가
     let searchedLocationViewModel = SearchedLocationViewModel() // 검색된 셀 저장
     let markerViewModel = MarkerViewModel()
+    var searchOption : Option?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,18 @@ class SearchLocationViewController: UIViewController {
         //searchController 안의 searchBar 이용하기
         searchContainerView.addSubview(searchController.searchBar)
         searchController.searchBar.delegate = self // searchBar delegate 설정, Delegate extension
+    }
+
+    @IBAction func setRadius(_ sender: Any) {
+        // 1000 2000 3000 까지 지금못함
+    }
+    @IBAction func setLandMark(_ sender: Any) {
+        // 5가지
+
+    }
+    
+    @IBAction func setResultNumber(_ sender: Any) {
+        // 15 30 45 .. 15배수
     }
 }
 

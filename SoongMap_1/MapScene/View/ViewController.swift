@@ -28,6 +28,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let markerViewModel = MarkerViewModel()
     
     private var landMarkList : [String] = ["카페","편의점","맛집","주유소","은행"]
+    private var landMark : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func searchStart(_ sender: Any) {
-     
+        for location in selectedLocationViewModel.selectedLocation {
+            let x = location.placeInfo.x
+            let y = location.placeInfo.y
+            let option = Option(x: x, y: y, radius: "1000", sort: "accurancy", page: 1)
+            nearbySearch(term: landMark, option: option)
+        }
     }//search
 }
 
@@ -123,7 +129,11 @@ extension ViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //TODO : 선택된 셀을 기준으로 많이 사용하는 키워드로 검색기능 하면됨
         //옵션 기능 또 넣어서 main에서는 search로 다시 넣으면 되징
-        nearbySearch(term: landMarkList[indexPath.row])
+        let x = String(mapView.locationOverlay.location.lng)
+        let y = String(mapView.locationOverlay.location.lat)
+        var option = Option(x: x , y: y, radius: "1000", sort: "accurancy",page: 1)
+        landMark = landMarkList[indexPath.row]
+        nearbySearch(term: landMarkList[indexPath.row],option: option)
     }
 }
 
@@ -195,10 +205,7 @@ extension ViewController {
         } //for
     }//search
     
-    func nearbySearch(term : String){
-        let x = String(mapView.locationOverlay.location.lng)
-        let y = String(mapView.locationOverlay.location.lat)
-        let option = Option(x: x , y: y, radius: "1000", sort: "accurancy")
+    func nearbySearch(term : String,option : Option){
         refreshMarker()
         SearchKeyWordInteratorImpl.search(term, option: option) { response in
             for document in response.documents{
@@ -210,13 +217,13 @@ extension ViewController {
                     marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
                             //TODO : 인포윈도우로 정보 표현하기
                         print("marker data--> \(document)")
-                            return true
+                        return true
                     }//handler
                     marker.mapView = self.mapView
                 } // main thread
                 self.markerViewModel.addResultMarker(marker: Marker(marker: marker, document: document))
             } //for
-        }
+        }//search
     }
     
     func refreshMarker(){

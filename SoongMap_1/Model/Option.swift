@@ -11,6 +11,14 @@ struct Option {
     //default option으로 radius 1000, sort accurancy
     let x : String
     let y : String
-    let radius : String
+    var radius : String
     let sort : String
+    var page : Int
+    
+    mutating func updatePage(){
+        self.page = self.page + 1
+    }
+    mutating func updateRadius(_ radius : String){
+        self.radius = radius
+    }
 }
