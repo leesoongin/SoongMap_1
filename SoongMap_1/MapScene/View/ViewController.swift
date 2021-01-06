@@ -199,7 +199,7 @@ extension ViewController {
         let x = String(mapView.locationOverlay.location.lng)
         let y = String(mapView.locationOverlay.location.lat)
         let option = Option(x: x , y: y, radius: "1000", sort: "accurancy")
-  
+        refreshMarker()
         SearchKeyWordInteratorImpl.search(term, option: option) { response in
             for document in response.documents{
                 let marker = NMFMarker(position: NMGLatLng(lat: Double(document.y)!, lng: Double(document.x)!))
