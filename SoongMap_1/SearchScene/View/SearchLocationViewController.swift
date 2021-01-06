@@ -51,8 +51,7 @@ extension SearchLocationViewController : UISearchResultsUpdating {
 extension SearchLocationViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text else { return } //검색어
-        
-        SearchKeyWordInteratorImpl.search(searchTerm,location: nil) { response in
+        SearchKeyWordInteratorImpl.search(searchTerm,option: nil) { response in
             //TODO[x] : 데이터 화면에 표시하기  -> searchedLocationViewModel 만들기
             self.searchedLocationViewModel.clearSearchedLocation() // 원래 있던 데이터 비워주기
             for document in response.documents {
@@ -98,9 +97,9 @@ extension SearchLocationViewController : UITableViewDelegate,UITableViewDataSour
         //TODO[x] : 셀 선택시 selectedCell에 추가 , dismiss
         //TODO : option은 나중에 추가하기, 일단은 default
         let document = searchedLocationViewModel.searchedLocation[indexPath.row]
-        let option = SearchOption()
+        //default option
        
-        selectedLocationViewModel.addLocation(document: document, option: option)
+        selectedLocationViewModel.addLocation(document: document, option: nil)
         searchController.isActive = false
         dismiss(animated: true, completion: nil)
     }

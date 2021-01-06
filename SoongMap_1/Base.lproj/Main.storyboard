@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SoongMap_1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="main" id="BYZ-38-t0r" customClass="ViewController" customModule="SoongMap_1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,15 +22,70 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCa-rr-Ps7">
-                                <rect key="frame" x="8" y="92" width="398" height="60"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AeO-mm-nRl" customClass="NMFCompassView">
+                                <rect key="frame" x="8" y="156" width="44" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="dfY-HC-f2q"/>
+                                    <constraint firstAttribute="width" constant="44" id="OlA-O8-XxU"/>
+                                    <constraint firstAttribute="height" constant="44" id="XBs-Q4-2ue"/>
                                 </constraints>
+                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-s8-vrq">
+                                <rect key="frame" x="4" y="92" width="406" height="60"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="flh-vM-xkr"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dlk-hn-h96">
+                                    <size key="itemSize" width="101" height="77"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="landMarkCell" id="BNr-1x-t9o" customClass="LandMarkCell" customModule="SoongMap_1" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-8.5" width="101" height="77"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nRd-st-jUa">
+                                            <rect key="frame" x="0.0" y="0.0" width="101" height="77"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zhw-jD-dcs">
+                                                    <rect key="frame" x="18" y="22" width="24" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="XxE-M9-mSL"/>
+                                                        <constraint firstAttribute="height" constant="20" id="xrV-bh-0Xa"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L95-Ky-jKB">
+                                                    <rect key="frame" x="59" y="28" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="M1b-Hl-fL8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="L95-Ky-jKB" secondAttribute="trailing" constant="8" id="7H7-vH-xDc"/>
+                                                <constraint firstItem="zhw-jD-dcs" firstAttribute="centerY" secondItem="nRd-st-jUa" secondAttribute="centerY" id="FTR-nz-zOQ"/>
+                                                <constraint firstItem="L95-Ky-jKB" firstAttribute="leading" secondItem="zhw-jD-dcs" secondAttribute="trailing" constant="4" id="MlC-bu-gCm"/>
+                                                <constraint firstItem="zhw-jD-dcs" firstAttribute="leading" secondItem="nRd-st-jUa" secondAttribute="leading" constant="8" id="lSk-S3-gdT"/>
+                                                <constraint firstItem="L95-Ky-jKB" firstAttribute="centerY" secondItem="zhw-jD-dcs" secondAttribute="centerY" id="o1x-u7-jXQ"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="101" height="77"/>
+                                        <connections>
+                                            <outlet property="imageView" destination="zhw-jD-dcs" id="dKS-Vi-JLb"/>
+                                            <outlet property="label" destination="L95-Ky-jKB" id="yjp-uU-eEl"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
                                 <connections>
-                                    <segue destination="ysM-pu-5kg" kind="embed" identifier="landMark" id="hzF-u3-hf5"/>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="80Q-Qk-K6r"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Jpu-jX-QV3"/>
                                 </connections>
-                            </containerView>
+                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLJ-Ec-rfx">
                                 <rect key="frame" x="366" y="50" width="40" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -57,19 +112,23 @@
                         <constraints>
                             <constraint firstItem="WLJ-Ec-rfx" firstAttribute="leading" secondItem="8k3-8f-PoJ" secondAttribute="trailing" constant="8" id="0Qm-Qu-fvZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WLJ-Ec-rfx" secondAttribute="trailing" constant="8" id="1Re-0i-Tmr"/>
+                            <constraint firstItem="AeO-mm-nRl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="49c-dI-sGT"/>
                             <constraint firstItem="WLJ-Ec-rfx" firstAttribute="centerY" secondItem="8k3-8f-PoJ" secondAttribute="centerY" id="4iS-5g-X5e"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="MZm-fK-cNJ" secondAttribute="trailing" id="8w3-LA-0Yf"/>
-                            <constraint firstItem="KCa-rr-Ps7" firstAttribute="top" secondItem="8k3-8f-PoJ" secondAttribute="bottom" id="Ldb-Qg-ihM"/>
+                            <constraint firstItem="gyl-s8-vrq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="9ex-xL-LDH"/>
+                            <constraint firstItem="AeO-mm-nRl" firstAttribute="top" secondItem="gyl-s8-vrq" secondAttribute="bottom" constant="4" id="EQd-P7-X4p"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gyl-s8-vrq" secondAttribute="trailing" constant="4" id="GM4-TE-of9"/>
                             <constraint firstAttribute="bottom" secondItem="MZm-fK-cNJ" secondAttribute="bottom" id="Nbf-5Z-jZ2"/>
+                            <constraint firstItem="gyl-s8-vrq" firstAttribute="top" secondItem="8k3-8f-PoJ" secondAttribute="bottom" id="QZA-Tg-MmK"/>
                             <constraint firstItem="8k3-8f-PoJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="RNf-60-eUU"/>
                             <constraint firstItem="8k3-8f-PoJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="4" id="enh-PL-xEF"/>
                             <constraint firstItem="MZm-fK-cNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fQ9-ji-SuL"/>
-                            <constraint firstItem="KCa-rr-Ps7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fqP-3P-EZH"/>
                             <constraint firstItem="MZm-fK-cNJ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="uDD-sS-NHO"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KCa-rr-Ps7" secondAttribute="trailing" constant="8" id="uhW-qg-tbi"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="gyl-s8-vrq" id="ICa-Pb-u0c"/>
+                        <outlet property="compassView" destination="AeO-mm-nRl" id="zXY-6i-f3b"/>
                         <outlet property="dummySearchBar" destination="8k3-8f-PoJ" id="G3R-vf-BCW"/>
                         <outlet property="naverMapView" destination="MZm-fK-cNJ" id="wRC-n7-Nq1"/>
                     </connections>
@@ -165,56 +224,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QUu-Yp-W8R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="141" y="877"/>
-        </scene>
-        <!--Land Mark List View Controller-->
-        <scene sceneID="iep-4e-Eum">
-            <objects>
-                <viewController id="ysM-pu-5kg" customClass="LandMarkListViewController" customModule="SoongMap_1" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gti-0i-unH">
-                        <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gyl-s8-vrq">
-                                <rect key="frame" x="0.0" y="0.0" width="398" height="60"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dlk-hn-h96">
-                                    <size key="itemSize" width="101" height="77"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="landMarkCell" id="BNr-1x-t9o" customClass="LandMarkCell" customModule="SoongMap_1" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-8.5" width="101" height="77"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nRd-st-jUa">
-                                            <rect key="frame" x="0.0" y="0.0" width="101" height="77"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="101" height="77"/>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="ysM-pu-5kg" id="3GJ-W7-Xdo"/>
-                                    <outlet property="delegate" destination="ysM-pu-5kg" id="Q9u-wb-zr0"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="elx-zo-763"/>
-                        <constraints>
-                            <constraint firstItem="gyl-s8-vrq" firstAttribute="leading" secondItem="gti-0i-unH" secondAttribute="leading" id="Jmk-Oj-XWc"/>
-                            <constraint firstAttribute="trailing" secondItem="gyl-s8-vrq" secondAttribute="trailing" id="Ng4-cU-sWX"/>
-                            <constraint firstAttribute="bottom" secondItem="gyl-s8-vrq" secondAttribute="bottom" id="dwa-aV-Q4Z"/>
-                            <constraint firstItem="gyl-s8-vrq" firstAttribute="top" secondItem="gti-0i-unH" secondAttribute="top" id="rFO-DE-e6P"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="gyl-s8-vrq" id="aA3-vf-xuF"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Nij-Rw-naE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="905.79710144927549" y="-94.419642857142847"/>
         </scene>
     </scenes>
     <resources>

@@ -13,7 +13,7 @@ class SelectedLocationManager{
     
     var selectedLocation = [Location]() // 맨 처음 빈 리스트
     
-    func addLocation(_ document : Document, _ option : SearchOption){
+    func addLocation(_ document : Document, _ option : Option?){
         selectedLocation.append(Location(placeInfo: document, option: option))
     }
     func clearLocation(){
@@ -28,7 +28,7 @@ class SelectedLocationViewModel {
         return manager.selectedLocation
     }
     
-    func addLocation(document : Document, option : SearchOption){
+    func addLocation(document : Document, option : Option?){
         return manager.addLocation(document,option)
     }
     func clearLocation(){

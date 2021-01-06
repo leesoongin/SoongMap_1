@@ -14,26 +14,25 @@ private let KAKAO_APP_KEY : String = "KakaoAK fa9599b6499ab461ea2adb295d7e939f"
 
 // 검색어, x,y ,radius
 class SearchKeyWordInteratorImpl {
-    static func search(_ term : String, location : Location?, completion : @escaping (SearchKeyWordResponseModel) -> Void){
+    static func search(_ term : String, option : Option?, completion : @escaping (SearchKeyWordResponseModel) -> Void){
         let session = URLSession(configuration: .default)
         var urlComponents = URLComponents(string: KAKAO_KEYWORD_SEARCH_URL)!
         //TODO : 카테고리, x,y,radius sort , page 옵션 쿼리아이템 만들어서 추기하기
         // require
         let query = URLQueryItem(name: "query", value: term)
-        //location이 존재할때 !
-        if location != nil{
-            let xQuery = URLQueryItem(name: "x", value: location?.placeInfo.x)
-            let yQuery = URLQueryItem(name: "y", value: location?.placeInfo.y)
-            let radiusQuery = URLQueryItem(name: "radius", value: String((location?.option.radius)!))
-            let sortQuery = URLQueryItem(name: "x", value: location?.option.sort)
-            
+        //x y radius, sort는 세트로 필요함
+        if option != nil {
+            print("option x --> \(option?.x) , \(option?.y),  \(option?.radius), \(option?.sort)")
+            let xQuery = URLQueryItem(name: "x", value: option?.x)
+            let yQuery = URLQueryItem(name: "y", value: option?.y)
+            let radiusQuery = URLQueryItem(name: "radius", value: (option?.radius))
+         //   let sortQuery = URLQueryItem(name: "sort", value: option?.sort)
             urlComponents.queryItems?.append(xQuery)
             urlComponents.queryItems?.append(yQuery)
             urlComponents.queryItems?.append(radiusQuery)
-            urlComponents.queryItems?.append(sortQuery)
+           // urlComponents.queryItems?.append(sortQuery)
         }
         urlComponents.queryItems?.append(query)
-        
         
         var requestURL = URLRequest(url: urlComponents.url!)
         requestURL.httpMethod = HTTP_METHOD

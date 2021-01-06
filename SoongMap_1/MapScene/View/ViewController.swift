@@ -16,7 +16,9 @@ private let DEFAULT_LOCATION = NMFCameraPosition(NMGLatLng(lat: 37.5666102, lng:
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var dummySearchBar: UISearchBar!
-    @IBOutlet weak var naverMapView : NMFNaverMapView!
+    @IBOutlet  weak var naverMapView : NMFNaverMapView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var compassView: NMFCompassView!
     
     var mapView : NMFMapView {
         return naverMapView.mapView
@@ -25,15 +27,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let selectedLocationViewModel = SelectedLocationViewModel()
     let markerViewModel = MarkerViewModel()
     
+    private var landMarkList : [String] = ["카페","편의점","맛집","주유소","은행"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         dummySearchBar.delegate = self
         dummySearchBar.backgroundImage = UIImage()
         dummySearchBar.searchTextField.backgroundColor =  #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        collectionView.backgroundColor = UIColor.clear
         naverMapView.showLocationButton = true //내 위치 찾기 버튼 활성화 false는 비활성화
         mapView.touchDelegate = self
-        mapView.moveCamera(NMFCameraUpdate(position: DEFAULT_LOCATION))
+        mapView.positionMode = .compass
+        compassView.mapView = self.mapView
+        DispatchQueue.main.async {
+            self.mapView.moveCamera(NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: self.mapView.locationOverlay.location.lat, lng: self.mapView.locationOverlay.location.lng), zoom: 15, tilt: 0, heading: 0)))
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,8 +51,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func searchStart(_ sender: Any) {
-        //문제 !!! 네트워킹이 끝나고 난 뒤 실행시키려면 어케해야할까? 네트워킹 강의 인프런꺼 보면 해결할 수 있을듯
-        search()
+     
     }//search
 }
 
@@ -68,6 +76,60 @@ extension ViewController : UISearchBarDelegate {
         }
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
+    }
+}
+
+extension ViewController : UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return landMarkList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "landMarkCell", for: indexPath) as? LandMarkCell else {
+            return UICollectionViewCell()
+        }
+        
+        switch indexPath.row {
+        case 0:
+            cell.imageView.image = UIImage(named: "cafe")
+            cell.label.text = landMarkList[indexPath.row]
+        case 1:
+            cell.imageView.image = UIImage(named: "convenience")
+            cell.label.text = landMarkList[indexPath.row]
+        case 2:
+            cell.imageView.image = UIImage(named: "restaurant")
+            cell.label.text = landMarkList[indexPath.row]
+        case 3:
+            cell.imageView.image = UIImage(named: "gas_station")
+            cell.label.text = landMarkList[indexPath.row]
+        default:
+            cell.imageView.image = UIImage(named: "bank")
+            cell.label.text = landMarkList[indexPath.row]
+        }
+        
+        cell.backgroundColor =  #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        cell.layer.cornerRadius = 20
+        cell.layer.masksToBounds = true
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0.3, height: 1.0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 0.4
+        cell.layer.masksToBounds = false
+        return cell
+    }
+}
+
+extension ViewController : UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //TODO : 선택된 셀을 기준으로 많이 사용하는 키워드로 검색기능 하면됨
+        //옵션 기능 또 넣어서 main에서는 search로 다시 넣으면 되징
+        nearbySearch(term: landMarkList[indexPath.row])
+    }
+}
+
+extension ViewController : UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 120, height: 40)
     }
 }
 
@@ -108,13 +170,11 @@ extension ViewController {
     }
     
     //검색 api사용하는함수로 작성하자
-    func search(){
+    func search(term : String){
         //TODO : 마커를 중심으로 radius, sort 옵션을 추가하여 검색 api를 사용해 검색하기
-        //TODO[x] : 1. 선택된 마커의 수만큼 서칭
-        //TODO[x] : 2. 서칭된 결과를 MarkerViewModel의 result에 저장
         markerViewModel.clearResultMarker()
         for location in selectedLocationViewModel.selectedLocation{
-            SearchKeyWordInteratorImpl.search("주유소", location: location) { response in
+            SearchKeyWordInteratorImpl.search(term, option: nil ) { response in
                 //response의 데이터로 서칭된 결과 저장
                 for document in response.documents{
                     let marker = NMFMarker(position: NMGLatLng(lat: Double(document.y)!, lng: Double(document.x)!))
@@ -135,6 +195,37 @@ extension ViewController {
         } //for
     }//search
     
+    func nearbySearch(term : String){
+        let x = String(mapView.locationOverlay.location.lng)
+        let y = String(mapView.locationOverlay.location.lat)
+        let option = Option(x: x , y: y, radius: "1000", sort: "accurancy")
+  
+        SearchKeyWordInteratorImpl.search(term, option: option) { response in
+            for document in response.documents{
+                let marker = NMFMarker(position: NMGLatLng(lat: Double(document.y)!, lng: Double(document.x)!))
+                DispatchQueue.main.async {
+                    marker.captionText = document.place_name
+                    marker.iconImage = NMFOverlayImage(name: "image1")
+                    marker.isHideCollidedSymbols = true //캡션, 심벌이 충돌시 심벌 숨김
+                    marker.touchHandler = { [weak self] (overlay : NMFOverlay) -> Bool in
+                            //TODO : 인포윈도우로 정보 표현하기
+                        print("marker data--> \(document)")
+                            return true
+                    }//handler
+                    marker.mapView = self.mapView
+                } // main thread
+                self.markerViewModel.addResultMarker(marker: Marker(marker: marker, document: document))
+            } //for
+        }
+    }
+    
+    func refreshMarker(){
+        for marker in markerViewModel.resultMarkers{
+            marker.marker.mapView = nil
+        }
+        markerViewModel.clearResultMarker()
+    }
+    
     //MARK: -requestGPSPermission
     func requestGPSPermission() -> Bool {
           switch CLLocationManager.authorizationStatus() {
@@ -152,4 +243,6 @@ extension ViewController {
             return false
         }
     }
+    
 }
+

@@ -10,21 +10,11 @@ import UIKit
 
 struct Location{
     let placeInfo : Document
-    let option : SearchOption
-    init (placeInfo : Document, option : SearchOption){
+    let option : Option?
+    init (placeInfo : Document, option : Option?){
         self.placeInfo = placeInfo
         self.option = option
     }
 }
 
 
-struct SearchOption {
-    //default option으로 radius 1000, sort accurancy
-    let radius : Int
-    let sort : String
-    
-    init(radius : Int = 1000, sort : String = "accurancy") {
-        self.radius = radius
-        self.sort = sort
-    }
-}

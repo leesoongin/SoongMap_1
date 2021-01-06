@@ -18,6 +18,7 @@
 		A81AADD02598D470000BECD7 /* SoongMap_1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A81AADCE2598D470000BECD7 /* SoongMap_1.xcdatamodeld */; };
 		A81AADD22598D472000BECD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81AADD12598D472000BECD7 /* Assets.xcassets */; };
 		A81AADD52598D472000BECD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81AADD32598D472000BECD7 /* LaunchScreen.storyboard */; };
+		A8249A7225A4EDF700253A69 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8249A7125A4EDF700253A69 /* Option.swift */; };
 		A850DC67259A0FD700003EDA /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850DC66259A0FD700003EDA /* SearchLocationViewController.swift */; };
 		A850DC70259AF21C00003EDA /* SearchKeyWordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850DC6F259AF21C00003EDA /* SearchKeyWordRequest.swift */; };
 		A850DC74259AF24000003EDA /* SearchCategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A850DC73259AF24000003EDA /* SearchCategoryRequest.swift */; };
@@ -46,6 +47,7 @@
 		A81AADD12598D472000BECD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A81AADD42598D472000BECD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A81AADD62598D472000BECD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A8249A7125A4EDF700253A69 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		A850DC66259A0FD700003EDA /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		A850DC6F259AF21C00003EDA /* SearchKeyWordRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeyWordRequest.swift; sourceTree = "<group>"; };
 		A850DC73259AF24000003EDA /* SearchCategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryRequest.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				A8B73200259CBDB9004D08D5 /* Response */,
 				A86818292598F98B00F57957 /* Location.swift */,
 				A818D5FB259DF318005F84BE /* Marker.swift */,
+				A8249A7125A4EDF700253A69 /* Option.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				A818D5F5259D9F3F005F84BE /* SearchedLocationViewModel.swift in Sources */,
 				A868182A2598F98B00F57957 /* Location.swift in Sources */,
 				A818D600259E222D005F84BE /* MarkerViewModel.swift in Sources */,
+				A8249A7225A4EDF700253A69 /* Option.swift in Sources */,
 				A818D5FC259DF318005F84BE /* Marker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
