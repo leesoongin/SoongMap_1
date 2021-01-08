@@ -178,7 +178,7 @@ extension ViewController {
         
         mapView.moveCamera(cameraUpdate)
     }
-    
+    ///fdasdasdsad
     //검색 api사용하는함수로 작성하자
     func search(term : String){
         //TODO : 마커를 중심으로 radius, sort 옵션을 추가하여 검색 api를 사용해 검색하기
